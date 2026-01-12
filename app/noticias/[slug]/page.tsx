@@ -1,10 +1,5 @@
 export const runtime = "edge";
 
-import Link from "next/link";
-import { BrandHeader } from "@/components/layout/BrandHeader";
-import { newsData } from "@/lib/newsData";
-
-
 import Link from 'next/link';
 import { BrandHeader } from '@/components/layout/BrandHeader';
 import { newsData } from '@/lib/newsData';
