@@ -3,11 +3,12 @@ import { BrandHeader } from '@/components/layout/BrandHeader';
 import { newsData } from '@/lib/newsData';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
-export default function GenericNoticiaPage({ params }: Props) {
-  const article = newsData[params.slug];
+export default async function GenericNoticiaPage({ params }: Props) {
+  const { slug } = await params;
+  const article = newsData[slug];
 
   if (!article) {
     return (
@@ -38,7 +39,6 @@ export default function GenericNoticiaPage({ params }: Props) {
       <BrandHeader />
       <main className="container mx-auto px-4 py-12 lg:py-20">
         <article className="max-w-4xl mx-auto bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-          {/* Hero Image / Placeholder */}
           <div className="h-64 md:h-96 bg-gray-200 relative overflow-hidden">
             <div className="absolute inset-0 bg-[#e0e7ff] flex items-center justify-center text-9xl select-none">
               {article.category === 'Infraestructura'
