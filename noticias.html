@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias - Vyktor Nexus | Tecnología y Construcción</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <img src="assets/img/logo-color.png" alt="Vyktor Nexus Logo" class="nav-logo">
+                    <span class="brand-name">VYKTORNEXUS</span>
+                </a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i> &#9776;
+            </div>
+
+            <ul class="nav-menu">
+                <!-- NOTICIAS -->
+                <li class="nav-item">
+                    <span class="nav-link">NOTICIAS <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="noticias.html?category=all" class="dropdown-link">Todas las Noticias</a>
+                        <a href="noticias.html?category=tendencias" class="dropdown-link">Actualidad en Construcción
+                            (Perú)</a>
+                        <a href="noticias.html?category=tendencias" class="dropdown-link">Infraestructura y Obras
+                            Públicas</a>
+                        <a href="noticias.html?category=software" class="dropdown-link">Tecnología para Arquitectura</a>
+                        <a href="noticias.html?category=software" class="dropdown-link">Nuevas Versiones de Software</a>
+                        <a href="noticias.html?category=ia" class="dropdown-link">Inteligencia Artificial</a>
+                        <a href="noticias.html?category=tramites" class="dropdown-link">Normativas y Reglamentos</a>
+                    </div>
+                </li>
+
+                <!-- VIDEOS TUTORIALES -->
+                <li class="nav-item">
+                    <span class="nav-link">VIDEOS TUTORIALES <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="tutoriales-autocad.html" class="dropdown-link">AutoCAD (planos, bloques)</a>
+                        <a href="tutoriales-revit.html" class="dropdown-link">Revit (modelado, familias)</a>
+                        <a href="tutoriales-etabs.html" class="dropdown-link">ETABS (análisis estructural)</a>
+                        <a href="tutoriales-bim.html" class="dropdown-link">Flujo BIM</a>
+                        <a href="tutoriales-ia.html" class="dropdown-link">IA para Arquitectos</a>
+                        <a href="tutoriales-productividad.html" class="dropdown-link">Productividad y Automatización</a>
+                    </div>
+                </li>
+
+                <!-- BIBLIOTECA DE PROMPTS -->
+                <li class="nav-item">
+                    <span class="nav-link">IA <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="ia-prompts-autocad.html" class="dropdown-link">Prompts para Autocad</a>
+                        <a href="ia-prompts-revit.html" class="dropdown-link">Prompts para Revit</a>
+                        <a href="index.html#prompts" class="dropdown-link">Nanobanana</a>
+                    </div>
+                </li>
+
+                <!-- RECURSOS -->
+                <li class="nav-item">
+                    <span class="nav-link">RECURSOS <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="recursos-autocad.html" class="dropdown-link">AutoCAD</a>
+                        <a href="recursos-revit.html" class="dropdown-link">Revit</a>
+                        <a href="index.html#recursos" class="dropdown-link">ETABS</a>
+                        <a href="index.html#recursos" class="dropdown-link">Checklists Municipales</a>
+                        <a href="index.html#recursos" class="dropdown-link">Formatos Técnicos</a>
+                        <a href="index.html#recursos" class="dropdown-link">Descargas Gratuitas</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- NEWS HERO -->
+        <section class="news-hero">
+            <h1>Noticias de Tecnología y Construcción</h1>
+            <p class="news-intro">Actualidad, tendencias, software, inteligencia artificial y procesos reales del sector
+                construcción.</p>
+        </section>
+
+        <!-- FILTERS -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-category="all">Todos</button>
+            <button class="filter-btn" data-category="bim">BIM</button>
+            <button class="filter-btn" data-category="software">Software</button>
+            <button class="filter-btn" data-category="ia">IA</button>
+            <button class="filter-btn" data-category="tramites">Trámites</button>
+            <button class="filter-btn" data-category="mercado">Mercado</button>
+            <button class="filter-btn" data-category="tendencias">Tendencias</button>
+        </div>
+
+        <!-- NEWS GRID -->
+        <div class="grid news-grid">
+
+            <!-- Article 1: BIM -->
+            <article class="card news-card" data-category="bim">
+                <div class="news-img-container">
+                    <!-- Placeholder, replace with actual images if available -->
+                    <div class="placeholder-img" style="background-color: #e0e7ff;">🏗️</div>
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-bim">BIM</span>
+                    <h3>El futuro del BIM en obras públicas</h3>
+                    <p>Análisis sobre la adopción obligatoria de BIM en licitaciones del estado y lo que significa para
+                        las empresas.</p>
+                    <a href="articulo-detalle.html" class="read-more">Leer más &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Article 2: AI -->
+            <article class="card news-card" data-category="ia">
+                <div class="news-img-container">
+                    <div class="placeholder-img" style="background-color: #fce7f3;">🤖</div>
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-ia">IA</span>
+                    <h3>IA Generativa para Arquitectos</h3>
+                    <p>Cómo herramientas como Midjourney y Stable Diffusion están cambiando la etapa de
+                        conceptualización.</p>
+                    <a href="articulo-detalle.html" class="read-more">Leer más &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Article 3: Software -->
+            <article class="card news-card" data-category="software">
+                <div class="news-img-container">
+                    <div class="placeholder-img" style="background-color: #dcfce7;">💻</div>
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-software">Software</span>
+                    <h3>Novedades en Revit 2025</h3>
+                    <p>Un repaso a las características más esperadas de la nueva versión del software líder en modelado.
+                    </p>
+                    <a href="articulo-detalle.html" class="read-more">Leer más &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Article 4: Tendencias -->
+            <article class="card news-card" data-category="tendencias">
+                <div class="news-img-container">
+                    <div class="placeholder-img" style="background-color: #ffedd5;">🌍</div>
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-tendencias">Tendencias</span>
+                    <h3>Construcción Sostenible: Materiales 2024</h3>
+                    <p>Nuevos materiales ecológicos que están ganando terreno en el mercado latinoamericano.</p>
+                    <a href="articulo-detalle.html" class="read-more">Leer más &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Article 5: Mercado -->
+            <article class="card news-card" data-category="mercado">
+                <div class="news-img-container">
+                    <div class="placeholder-img" style="background-color: #f3f4f6;">📈</div>
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-mercado">Mercado</span>
+                    <h3>Costos de Construcción x m2</h3>
+                    <p>Actualización trimestral de los costos promedio para vivienda multifamiliar en Lima.</p>
+                    <a href="articulo-detalle.html" class="read-more">Leer más &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Article 6: Trámites -->
+            <article class="card news-card" data-category="tramites">
+                <div class="news-img-container">
+                    <div class="placeholder-img" style="background-color: #fef3c7;">📝</div>
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-tramites">Trámites</span>
+                    <h3>Licencias de Edificación: Guía Rápida</h3>
+                    <p>Los errores más comunes al presentar expedientes municipales y cómo evitarlos.</p>
+                    <a href="articulo-detalle.html" class="read-more">Leer más &rarr;</a>
+                </div>
+            </article>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 VYKTOR NEXUS - Innovación en Construcción</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+

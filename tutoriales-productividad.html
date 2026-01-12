@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutoriales Productividad | Vyktor Nexus</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <img src="assets/img/logo-color.png" alt="Vyktor Nexus Logo" class="nav-logo">
+                    <span class="brand-name">VYKTORNEXUS</span>
+                </a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i> &#9776;
+            </div>
+
+            <ul class="nav-menu">
+                <!-- NOTICIAS -->
+                <li class="nav-item">
+                    <span class="nav-link">NOTICIAS <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="noticias.html?category=all" class="dropdown-link">Todas las Noticias</a>
+                        <a href="noticias.html?category=tendencias" class="dropdown-link">Actualidad en Construcción
+                            (Perú)</a>
+                        <a href="noticias.html?category=tendencias" class="dropdown-link">Infraestructura y Obras
+                            Públicas</a>
+                        <a href="noticias.html?category=software" class="dropdown-link">Tecnología para Arquitectura</a>
+                        <a href="noticias.html?category=software" class="dropdown-link">Nuevas Versiones de Software</a>
+                        <a href="noticias.html?category=ia" class="dropdown-link">Inteligencia Artificial</a>
+                        <a href="noticias.html?category=tramites" class="dropdown-link">Normativas y Reglamentos</a>
+                    </div>
+                </li>
+
+                <!-- VIDEOS TUTORIALES -->
+                <li class="nav-item">
+                    <span class="nav-link">VIDEOS TUTORIALES <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="tutoriales-autocad.html" class="dropdown-link">AutoCAD (planos, bloques)</a>
+                        <a href="tutoriales-revit.html" class="dropdown-link">Revit (modelado, familias)</a>
+                        <a href="tutoriales-etabs.html" class="dropdown-link">ETABS (análisis estructural)</a>
+                        <a href="tutoriales-bim.html" class="dropdown-link">Flujo BIM</a>
+                        <a href="tutoriales-ia.html" class="dropdown-link">IA para Arquitectos</a>
+                        <a href="tutoriales-productividad.html" class="dropdown-link">Productividad y Automatización</a>
+                    </div>
+                </li>
+
+                <!-- BIBLIOTECA DE PROMPTS -->
+                <li class="nav-item">
+                    <span class="nav-link">IA <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="ia-prompts-autocad.html" class="dropdown-link">Prompts para Autocad</a>
+                        <a href="ia-prompts-revit.html" class="dropdown-link">Prompts para Revit</a>
+                        <a href="index.html#prompts" class="dropdown-link">Nanobanana</a>
+                    </div>
+                </li>
+
+                <!-- RECURSOS -->
+                <li class="nav-item">
+                    <span class="nav-link">RECURSOS <span class="nav-arrow">▼</span></span>
+                    <div class="dropdown">
+                        <a href="recursos-autocad.html" class="dropdown-link">AutoCAD</a>
+                        <a href="recursos-revit.html" class="dropdown-link">Revit</a>
+                        <a href="index.html#recursos" class="dropdown-link">ETABS</a>
+                        <a href="index.html#recursos" class="dropdown-link">Checklists Municipales</a>
+                        <a href="index.html#recursos" class="dropdown-link">Formatos Técnicos</a>
+                        <a href="index.html#recursos" class="dropdown-link">Descargas Gratuitas</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- HEADER SECTION -->
+        <section class="news-hero">
+            <h1>Productividad y Automatización</h1>
+            <p class="news-intro">Scripts en Dynamo, Python y técnicas para trabajar más rápido.</p>
+        </section>
+
+        <!-- VIDEOS GRID -->
+        <div class="grid">
+            <div class="card">
+                <div class="video-container">
+                    <div
+                        style="width:100%; height:100%; background:#10b981; display:flex; align-items:center; justify-content:center; color:white;">
+                        <i class="fas fa-bolt" style="font-size:2rem;"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-software">Dynamo</span>
+                    <h3>Scripts Básicos para Revit</h3>
+                    <p>Automatiza tareas repetitivas sin saber programar código complejo.</p>
+                </div>
+            </div>
+
+            <!-- More cards will go here -->
+            <div class="card">
+                <div class="video-container">
+                    <div
+                        style="width:100%; height:100%; background:#f0f4f8; display:flex; align-items:center; justify-content:center; color:#888;">
+                        Proximamente
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="tag {{TAG_CLASS}}">{{TAG_NAME}}</span>
+                    <h3>Más contenido pronto</h3>
+                    <p>Estamos trabajando en nuevos tutoriales para esta sección.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 VYKTORNEXUS - Innovación en Construcción</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
