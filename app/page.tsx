@@ -1,108 +1,231 @@
+"use client";
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { BrandHeader } from '@/components/layout/BrandHeader';
-import { PromptLibrary } from '@/components/sections/PromptLibrary';
 import { SoftwareCarousel } from '@/components/sections/SoftwareCarousel';
 import { ContentHub } from '@/components/sections/ContentHub';
+import {
+    PlayCircleOutlined,
+    FileZipOutlined,
+    RobotOutlined,
+    WhatsAppOutlined
+} from '@ant-design/icons';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function HomePage() {
+    const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+    const toggleFaq = (index: number) => {
+        setOpenFaq(openFaq === index ? null : index);
+    };
+
+    const faqs = [
+        {
+            q: "¿En qué puede ayudarte este espacio?",
+            a: "Te ayuda a aprender, optimizar y aplicar herramientas digitales e IA en arquitectura e ingeniería, para trabajar mejor y con criterios reales de proyecto."
+        },
+        {
+            q: "¿Qué tipo de contenido y recursos encontrarás aquí?",
+            a: "Tutoriales prácticos, recursos descargables y herramientas de IA (prompts) para AutoCAD, Revit, BIM, planos, modelado, presentación y gestión técnica de proyectos."
+        },
+        {
+            q: "¿Ofrecen servicios de ingeniería y arquitectura?",
+            a: "Sí. Además del contenido digital, también se brindan servicios profesionales como elaboración de expedientes técnicos de edificaciones, desarrollo de planos y apoyo técnico en proyectos reales."
+        }
+    ];
     return (
         <div className="min-h-screen bg-[#dde8f4] font-sans">
             <BrandHeader />
 
-            <main className="container mx-auto px-4 py-8">
+            <main className="py-8 space-y-20">
 
-                {/* EXPERTISE HERO SECTION (New) */}
-                <section className="mb-20 text-center">
-                    <div className="bg-[#2f4860] rounded-3xl p-10 md:p-16 text-white shadow-xl relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                            <div className="absolute right-0 top-0 w-64 h-64 bg-[#ea7048] rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-                            <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#52aeb2] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+                {/* 1. HERO FUSIONADO (Integración Digital + ¿Qué necesitas hoy?) */}
+                <section className="container mx-auto px-4">
+                    <div className="relative bg-[#0a0f18] rounded-[2rem] p-8 md:p-12 text-white shadow-2xl overflow-hidden flex flex-col items-center">
+                        {/* Background Abstract Elements */}
+                        <div className="absolute inset-0 z-0">
+                            <div className="absolute inset-0 opacity-10"
+                                style={{
+                                    backgroundImage: 'linear-gradient(#52aeb2 1px, transparent 1px), linear-gradient(90deg, #52aeb2 1px, transparent 1px)',
+                                    backgroundSize: '50px 50px',
+                                    maskImage: 'radial-gradient(circle at 85% 50%, black, transparent 70%)'
+                                }}>
+                            </div>
+                            <div className="absolute inset-0"
+                                style={{
+                                    background: 'radial-gradient(circle at 80% 20%, rgba(234, 112, 72, 0.15) 0%, transparent 50%)'
+                                }}>
+                            </div>
+                            <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-[#52aeb2] opacity-10 blur-[100px] animate-pulse"></div>
                         </div>
 
-                        <div className="relative z-10 max-w-3xl mx-auto">
-                            <h2 className="text-sm font-bold tracking-[0.2em] text-[#ea7048] mb-4 uppercase">Ingeniería + Tecnología + IA</h2>
-                            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                                Domina el futuro de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea7048] to-[#f59e0b]">Construcción</span>
-                            </h1>
-                            <p className="text-xl text-gray-300 mb-10 leading-relaxed">
-                                Uniendo la precisión de <strong>AutoCAD</strong> y <strong>Revit</strong> con el poder de la <strong>Inteligencia Artificial</strong> para ingenieros y arquitectos.
-                            </p>
+                        <div className="relative z-10 w-full flex flex-col items-center gap-6 md:gap-8">
+                            {/* Centered Tagline Row */}
+                            <div className="w-full text-center">
+                                <h2 className="text-[#ea7048] font-bold tracking-[0.3em] text-lg md:text-xl uppercase">
+                                    Ingeniería + Arquitectura + Inteligencia Artificial
+                                </h2>
+                            </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                                <Link href="/tutoriales-revit" className="bg-white/10 backdrop-blur-sm border border-white/10 p-6 rounded-xl hover:bg-white/20 transition-all group">
-                                    <span className="text-3xl mb-3 block">🏗️</span>
-                                    <h3 className="font-bold text-lg mb-1 group-hover:text-[#ea7048] transition-colors">BIM Specialist</h3>
-                                    <p className="text-sm text-gray-400">Modelado avanzado y gestión paramétrica.</p>
-                                </Link>
-                                <Link href="/ia" className="bg-white/10 backdrop-blur-sm border border-white/10 p-6 rounded-xl hover:bg-white/20 transition-all group">
-                                    <span className="text-3xl mb-3 block">🤖</span>
-                                    <h3 className="font-bold text-lg mb-1 group-hover:text-[#ea7048] transition-colors">IA Workflow</h3>
-                                    <p className="text-sm text-gray-400">Automatización y generación con IA.</p>
-                                </Link>
-                                <Link href="/tutoriales-autocad" className="bg-white/10 backdrop-blur-sm border border-white/10 p-6 rounded-xl hover:bg-white/20 transition-all group">
-                                    <span className="text-3xl mb-3 block">📐</span>
-                                    <h3 className="font-bold text-lg mb-1 group-hover:text-[#ea7048] transition-colors">CAD Master</h3>
-                                    <p className="text-sm text-gray-400">Dibujo técnico y documentación precisa.</p>
-                                </Link>
+                            {/* Main Title & Message — Reference Image Layout */}
+                            <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 max-w-7xl mx-auto">
+                                <div className="lg:w-auto text-center lg:text-right">
+                                    <h1 className="text-[36px] md:text-[62px] font-extrabold leading-[1] mb-0 inline-block align-middle">
+                                        Integración<br />Digital
+                                    </h1>
+                                </div>
+
+                                {/* Vertical Separator (Desktop only) */}
+                                <div className="hidden lg:block w-[2px] h-24 bg-white/20 self-center"></div>
+
+                                <div className="lg:max-w-xl text-center lg:text-left">
+                                    <span className="block text-[24px] md:text-[42px] bg-gradient-to-r from-[#ea7048] to-[#f59e0b] bg-clip-text text-transparent italic leading-[1.1] font-extrabold">
+                                        Dibujo técnico, modelado e IA aplicada a proyectos de ingeniería
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* HUB SELECTION (Integrated inside Hero) */}
+                            <div className="w-full mt-6 pt-8 border-t border-white/10">
+                                <div className="text-center mb-6">
+                                    <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-1">¿Qué necesitas hoy?</h2>
+                                    <p className="text-sm text-gray-400">Elige tu camino y empieza ahora.</p>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                                    {/* TARJETA 1 — Aprender */}
+                                    <div className="bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10 hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
+                                        <div className="flex items-start gap-4 mb-3">
+                                            <div className="w-12 h-12 flex-shrink-0 bg-[#52aeb2]/20 rounded-xl flex items-center justify-center text-2xl text-[#52aeb2] group-hover:scale-110 transition-transform">
+                                                <PlayCircleOutlined />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">Aprender</h3>
+                                                <span className="block text-[11px] font-bold text-[#52aeb2] uppercase tracking-[0.2em] mt-1">(TUTORIALES)</span>
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-gray-400 mb-6 leading-relaxed">
+                                            Domina flujos reales en Revit, AutoCAD y BIM para proyectos profesionales.
+                                        </p>
+                                        <div className="mt-auto">
+                                            <Link href="/tutoriales" className="inline-flex items-center gap-2 font-bold text-[#52aeb2] text-base group-hover:gap-3 transition-all hover:text-white">
+                                                Ver tutoriales <span>→</span>
+                                            </Link>
+                                        </div>
+                                    </div>
+
+                                    {/* TARJETA 2 — Descargar */}
+                                    <div className="bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10 hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
+                                        <div className="flex items-start gap-4 mb-3">
+                                            <div className="w-12 h-12 flex-shrink-0 bg-[#ea7048]/20 rounded-xl flex items-center justify-center text-2xl text-[#ea7048] group-hover:scale-110 transition-transform">
+                                                <FileZipOutlined />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">Descargar</h3>
+                                                <span className="block text-[11px] font-bold text-[#ea7048] uppercase tracking-[0.2em] mt-1">(RECURSOS)</span>
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-gray-400 mb-6 leading-relaxed">
+                                            Plantillas, familias, bloques, checklists y formatos listos para usar.
+                                        </p>
+                                        <div className="mt-auto">
+                                            <Link href="/recursos" className="inline-flex items-center gap-2 font-bold text-[#ea7048] text-base group-hover:gap-3 transition-all hover:text-white">
+                                                Ir a recursos <span>→</span>
+                                            </Link>
+                                        </div>
+                                    </div>
+
+                                    {/* TARJETA 3 — Aplicar IA */}
+                                    <div className="bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10 hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
+                                        <div className="flex items-start gap-4 mb-3">
+                                            <div className="w-12 h-12 flex-shrink-0 bg-[#f59e0b]/20 rounded-xl flex items-center justify-center text-2xl text-[#f59e0b] group-hover:scale-110 transition-transform">
+                                                <RobotOutlined />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">Aplicar IA</h3>
+                                                <span className="block text-[11px] font-bold text-[#f59e0b] uppercase tracking-[0.2em] mt-1">(PROMPTS + IA)</span>
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-gray-400 mb-6 leading-relaxed">
+                                            Prompts probados para acelerar planos, BIM y presentación de proyectos.
+                                        </p>
+                                        <div className="mt-auto">
+                                            <Link href="/ia" className="inline-flex items-center gap-2 font-bold text-[#f59e0b] text-base group-hover:gap-3 transition-all hover:text-white">
+                                                Ver Biblioteca de Prompts <span>→</span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Final Description Section — Centered at Footer position */}
+                                <div className="w-full mt-12 text-center">
+                                    <p className="text-sm md:text-base text-gray-400 leading-normal max-w-4xl mx-auto opacity-70">
+                                        Te ayudo a simplificar proyectos de ingeniería y arquitectura integrando herramientas digitales y automatización con IA en flujos de trabajo claros, eficientes y profesionales.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* NEWS SECTION */}
-                <section className="mb-12">
+                {/* 2. NOTICIAS DESTACADAS */}
+                <section className="container mx-auto px-4">
                     <div className="flex justify-between items-center mb-8">
-                        <h2 className="text-3xl font-bold border-l-4 border-[#ea7048] pl-4">Noticias Destacadas</h2>
+                        <h2 className="text-3xl font-bold border-l-4 border-[#ea7048] pl-4 text-[#2f4860]">Noticias Destacadas</h2>
                         <a href="/noticias" className="text-[#ea7048] font-bold hover:underline text-lg">Ver todas →</a>
                     </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-                        <article className="lg:col-span-2 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
-                            <a href="/noticias/aeropuerto" className="block">
-                                <div className="h-72 bg-[#e0e7ff] flex items-center justify-center text-8xl grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all">✈️</div>
-                                <div className="p-8">
-                                    <div className="flex gap-4 items-center mb-4">
-                                        <span className="bg-[#ec4899] text-white px-3 py-1 rounded text-xs uppercase font-bold tracking-wider">Infraestructura</span>
-                                        <span className="text-gray-400 text-sm font-medium">05 Ene 2026</span>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                        <article className="lg:col-span-2 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full">
+                            <Link href="/noticias/arquitectos-uni-ganan-concurso-mundial" className="flex flex-col h-full text-decoration-none">
+                                <div className="h-72 bg-[#e0e7ff] overflow-hidden">
+                                    <img src="/assets/img/news-uni-2026.png" alt="Arquitectos UNI 2026" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                </div>
+                                <div className="p-8 flex-grow flex flex-col">
+                                    <div className="flex flex-wrap gap-2 mb-4">
+                                        <span className="bg-[#52aeb2] text-white px-3 py-1 rounded text-xs uppercase font-bold tracking-wider">Arquitectura</span>
+                                        <span className="ml-auto text-gray-400 text-sm font-medium self-center">13 Ene 2026</span>
                                     </div>
-                                    <h3 className="text-3xl font-bold mt-2 mb-4 leading-tight group-hover:text-[#ea7048] transition-colors">
-                                        Nuevo Aeropuerto Jorge Chávez: Balance tras 6 meses operando al 100%
+                                    <h3 className="text-3xl font-bold mt-2 mb-4 leading-tight group-hover:text-[#ea7048] transition-colors text-[#2f4860]">
+                                        Arquitectos de la UNI ganan concurso mundial con proyecto para reducir el tráfico en SJL
                                     </h3>
                                     <p className="text-gray-600 text-lg mb-6 line-clamp-2">
-                                        La nueva terminal de pasajeros, inaugurada en junio de 2025, ha transformado la conectividad en Sudamérica.
+                                        Un equipo de la Universidad Nacional de Ingeniería triunfa en el concurso de la AECID con una propuesta de urbanismo escalable para el distrito más poblado de Lima.
                                     </p>
-                                    <span className="text-[#ea7048] font-bold text-lg flex items-center gap-2 group-hover:gap-3 transition-all">Leer nota completa →</span>
+                                    <div className="mt-auto">
+                                        <span className="text-[#ea7048] font-bold text-lg flex items-center gap-2 group-hover:gap-3 transition-all">Leer nota completa &rarr;</span>
+                                    </div>
                                 </div>
-                            </a>
+                            </Link>
                         </article>
-
-                        <div className="bg-white rounded-xl p-8 shadow-sm">
+                        <div className="bg-white rounded-xl p-8 shadow-sm h-full flex flex-col">
                             <h3 className="text-xl font-bold text-[#ea7048] uppercase tracking-wider mb-6 pb-2 border-b-2 border-gray-50">Más Noticias</h3>
                             <div className="space-y-6">
                                 {[
-                                    { title: "Puerto de Chancay: Segundo puerto más activo del Perú", tag: "Comercio", tagColor: "#64748b", date: "08 Ene 2026", href: "/noticias/chancay" },
-                                    { title: "Avances Línea 2 del Metro: Nuevas estaciones en el Callao", tag: "Transporte", tagColor: "#f59e0b", date: "03 Ene 2026", href: "/noticias/metro-lima" },
-                                    { title: "Mortenson construirá estadio femenino de $225M en Denver", tag: "Internacional", tagColor: "#f59e0b", date: "09 Ene 2026", href: "/noticias/estadio-denver" },
+                                    { title: "Bono de Protección de Viviendas Vulnerables 2026", tag: "Ingeniería", href: "/noticias/bono-proteccion-vivienda-2026" },
+                                    { title: "Plan Nacional de Infraestructura 2026-2031", tag: "Infraestructura", href: "/noticias/proyectos-infraestructura-peru-2026-2031" },
+                                    { title: "IA Generativa: Tendencias AEC para 2026", tag: "Tecnología", href: "/noticias/ia-aec-tendencias-2026" },
+                                    { title: "BIM y IA en proyectos mineros 2026", tag: "Tecnología", href: "/noticias/stantec-diseno-electrico-mineria-bim" },
                                 ].map((news, i) => (
-                                    <a key={i} href={news.href} className="block group">
-                                        <div className="flex gap-4 items-center mb-2">
-                                            <span style={{ backgroundColor: news.tagColor }} className="text-white px-2 py-0.5 rounded-[4px] text-[10px] uppercase font-bold tracking-tight">{news.tag}</span>
-                                            <span className="text-gray-400 text-[11px]">{news.date}</span>
+                                    <Link key={i} href={news.href} className="block group">
+                                        <div className="flex justify-between items-center mb-1">
+                                            <span className="bg-[#ea7048]/10 text-[#ea7048] px-2 py-0.5 rounded text-[10px] uppercase font-bold">{news.tag}</span>
                                         </div>
                                         <h4 className="font-bold text-[#2f4860] group-hover:text-[#ea7048] transition-colors leading-snug">{news.title}</h4>
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         </div>
                     </div>
                 </section>
 
+                {/* 3. SECCIÓN DE PROGRAMAS / SOFTWARE */}
                 <SoftwareCarousel />
 
-                <div className="space-y-12 mt-12">
+                {/* 4. REVIT & 5. AUTOCAD */}
+                <div className="space-y-12">
                     <ContentHub
                         title="REVIT"
-                        subtitle="Latest tutorials and resources for Revit"
+                        subtitle="Últimos tutoriales y recursos para Revit"
                         videos={[
                             {
                                 title: "Optimización de Flujos",
@@ -118,16 +241,15 @@ export default function HomePage() {
                             }
                         ]}
                         navLinks={[
-                            { title: "Revit Tutorials", href: "/tutoriales-revit", icon: "🏗️" },
-                            { title: "Guides & Templates", href: "/tutoriales-productividad", icon: "📝" },
-                            { title: "Resources", href: "/recursos-revit", icon: "📥" },
-                            { title: "Prompt Library", href: "/ia-prompts-revit", icon: "🤖" },
+                            { title: "Tutoriales de Revit", href: "/tutoriales-revit", icon: "🏗️" },
+                            { title: "Recursos", href: "/recursos-revit", icon: "📥" },
+                            { title: "Biblioteca de Prompts", href: "/ia-prompts-revit", icon: "🤖" },
                         ]}
                     />
 
                     <ContentHub
                         title="AUTOCAD"
-                        subtitle="Master 2D drafting and documentation with AutoCAD"
+                        subtitle="Domina el dibujo 2D y la documentación con AutoCAD"
                         videos={[
                             {
                                 title: "Interfaz y Comandos Básicos",
@@ -143,54 +265,85 @@ export default function HomePage() {
                             }
                         ]}
                         navLinks={[
-                            { title: "AutoCAD Tutorials", href: "/tutoriales-autocad", icon: "📐" },
-                            { title: "Guides & Templates", href: "/tutoriales-productividad", icon: "📝" },
-                            { title: "Resources", href: "/recursos-autocad", icon: "📥" },
-                            { title: "Prompt Library", href: "/ia-prompts-autocad", icon: "🤖" },
+                            { title: "Tutoriales de AutoCAD", href: "/tutoriales-autocad", icon: "📐" },
+                            { title: "Recursos", href: "/recursos-autocad", icon: "📥" },
+                            { title: "Biblioteca de Prompts", href: "/ia-prompts-autocad", icon: "🤖" },
                         ]}
                     />
                 </div>
 
-                <PromptLibrary />
+                {/* 5. SECCIÓN DE PREGUNTAS FRECUENTES (FAQ) */}
+                <section className="container mx-auto px-4 py-4">
+                    <div className="max-w-3xl mx-auto">
+                        <h2 className="text-3xl font-bold text-[#2f4860] text-center mb-6">Preguntas Frecuentes</h2>
+                        <div className="space-y-4">
+                            {faqs.map((faq, i) => (
+                                <div
+                                    key={i}
+                                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 transition-all duration-300"
+                                >
+                                    <button
+                                        onClick={() => toggleFaq(i)}
+                                        className="w-full px-8 py-6 flex items-center justify-between text-left group"
+                                    >
+                                        <span className={`text-lg font-bold transition-colors duration-300 ${openFaq === i ? 'text-[#ea7048]' : 'text-[#2f4860]'}`}>
+                                            {faq.q}
+                                        </span>
+                                        <div className={`p-2 rounded-xl transition-all duration-300 ${openFaq === i ? 'bg-[#ea7048]/10 text-[#ea7048] rotate-180' : 'bg-gray-50 text-gray-400'}`}>
+                                            <ChevronDown size={20} />
+                                        </div>
+                                    </button>
 
-                {/* START HERE PATHS */}
-                <section className="mt-16">
-                    <h2 className="text-3xl font-bold border-l-4 border-[#ea7048] pl-4 mb-8">Comienza Aquí</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[
-                            { label: "Principiante", title: "Empieza desde cero", desc: "Fundamentos y primeros pasos en software BIM y CAD.", icon: "🌱" },
-                            { label: "Intermedio", title: "Mejora tu flujo", desc: "Optimización, atajos y mejores prácticas para trabajar más rápido.", icon: "⚡" },
-                            { label: "Avanzado", title: "Recursos Pro", desc: "Scripts, familias complejas y automatización con IA.", icon: "🚀" },
-                            { label: "IA", title: "Google AI & Gemini", desc: "Aprende a usar Google AI para potenciar tu productividad en ingeniería.", icon: "🤖" },
-                        ].map((p, i) => (
-                            <div key={i} className="bg-gradient-to-br from-white to-[#f8fbfe] border border-[#e1eaf4] rounded-2xl p-8 relative hover:shadow-lg transition-all group">
-                                <span className={`${p.label === 'IA' ? 'text-[#ea7048]' : 'text-[#52aeb2]'} text-sm font-bold uppercase tracking-wider mb-2 block`}>{p.label}</span>
-                                <h3 className="text-2xl font-bold mb-4 text-[#2f4860]">{p.title}</h3>
-                                <p className="text-gray-500 mb-6">{p.desc}</p>
-                                <a href={p.label === 'IA' ? '/ia' : '#'} className="text-[#ea7048] font-bold flex items-center gap-2 group-hover:gap-3 transition-all">Iniciar ruta →</a>
-                            </div>
-                        ))}
+                                    <div
+                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaq === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+                                    >
+                                        <div className="px-8 pb-8 pt-2">
+                                            <div className="pl-6 border-l-2 border-[#52aeb2] text-gray-600 leading-relaxed text-base">
+                                                {faq.a}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </section>
-
-                {/* FOOTER CTA */}
-                <section className="bg-white rounded-2xl p-16 text-center mt-16 shadow-sm border border-gray-50">
-                    <h2 className="text-4xl font-bold mb-4 text-[#2f4860]">Lleva tus proyectos al siguiente nivel</h2>
-                    <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">Accede a herramientas y conocimientos curados por expertos en el sector de la construcción.</p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-5">
-                        <Link href="/tutoriales" className="bg-[#ea7048] text-white px-10 py-4 rounded-xl font-bold hover:bg-[#d15d36] transition-all transform hover:-translate-y-1 shadow-lg shadow-[#ea7048]/20 flex items-center justify-center">
-                            Explorar tutoriales
-                        </Link>
-                        <Link href="/recursos" className="border-2 border-[#2f4860] text-[#2f4860] px-10 py-4 rounded-xl font-bold hover:bg-[#2f4860] hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center">
-                            Ir a recursos
-                        </Link>
-                    </div>
-                </section>
-
             </main>
 
-            <footer className="bg-[#2f4860] text-white py-12 text-center mt-16">
-                <p className="text-lg opacity-80">&copy; 2024 VYKTOR NEXUS - Innovación en Construcción</p>
+            {/* 6. SERVICIOS CTA + FOOTER (Bloque de Cierre Unificado FULL WIDTH) */}
+            <footer className="bg-[#2f4860] py-8 md:py-12 text-center relative overflow-hidden">
+                {/* Subtle Background Detail */}
+                <div className="absolute inset-0 opacity-10 pointer-events-none"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at 50% -20%, rgba(82, 174, 178, 0.15) 0%, transparent 70%)'
+                    }}>
+                </div>
+
+                <div className="container mx-auto px-4 relative z-10">
+                    <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-white leading-tight max-w-4xl mx-auto">
+                        ¿Necesitas apoyo profesional para tu proyecto?
+                    </h2>
+                    <p className="text-gray-300 text-base md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed opacity-90 text-center">
+                        Ofrezco servicios de arquitectura e ingeniería, desde encargos específicos hasta el desarrollo y evaluación de soluciones técnicas, con el respaldo de un equipo especializado según las necesidades de tu proyecto.
+                    </p>
+
+                    <a
+                        href="https://wa.me/519XXXXXXXX"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 bg-[#2ecc71] hover:bg-[#27ae60] text-white px-10 md:px-14 py-4 md:py-5 rounded-xl font-bold text-lg md:text-xl transition-all transform hover:-translate-y-1 hover:shadow-xl hover:shadow-[#2ecc71]/20 group"
+                    >
+                        <WhatsAppOutlined className="text-2xl md:text-3xl" />
+                        Contactar por WhatsApp
+                    </a>
+
+                    {/* Integrated Copyright Text */}
+                    <div className="mt-10 pt-6 border-t border-white/10">
+                        <p className="text-sm md:text-base text-white/50 font-medium tracking-widest uppercase">
+                            VyktorNexus - 2026
+                        </p>
+                    </div>
+                </div>
             </footer>
         </div>
     );

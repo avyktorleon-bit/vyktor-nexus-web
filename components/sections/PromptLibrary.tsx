@@ -54,16 +54,16 @@ export function PromptLibrary() {
 
     return (
         <section id="prompts" className="mt-16">
-            <h2 className="text-3xl font-bold border-l-4 border-[#ea7048] pl-4 mb-8">Biblioteca de Prompts</h2>
+            <h2 className="text-3xl font-bold border-l-4 border-[#ea7048] pl-4 mb-8 text-[#2f4860]">Biblioteca de Prompts</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {prompts.map((prompt) => (
                     <div key={prompt.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
                         <div className="p-6 flex-grow">
                             <div className="flex justify-between items-start mb-4">
                                 <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${prompt.category === 'Google AI' ? 'bg-blue-100 text-blue-600' :
-                                        prompt.category === 'Midjourney' ? 'bg-[#52aeb2]/10 text-[#52aeb2]' :
-                                            prompt.category === 'Revit' ? 'bg-orange-100 text-orange-600' :
-                                                'bg-gray-100 text-gray-600'
+                                    prompt.category === 'Midjourney' ? 'bg-[#52aeb2]/10 text-[#52aeb2]' :
+                                        prompt.category === 'Revit' ? 'bg-orange-100 text-orange-600' :
+                                            'bg-gray-100 text-gray-600'
                                     }`}>
                                     {prompt.category}
                                 </span>

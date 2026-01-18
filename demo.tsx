@@ -49,7 +49,7 @@ const items: MenuItem[] = [
   },
 ];
 
-const App: React.FC = () => {
+const DemoOne: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -73,4 +73,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default DemoOne;

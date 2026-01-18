@@ -3,14 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { BrandHeader } from '@/components/layout/BrandHeader';
-import { autocadTutorials, AutoCADTutorial } from '@/lib/autocadTutorialsData';
+import { iaTutorials, IATutorial } from '@/lib/iaTutorialsData';
 import { SearchOutlined, BookOutlined, ToolOutlined, BulbOutlined } from '@ant-design/icons';
 
-export default function AutoCADTutorialsPage() {
+export default function TutorialesIAIngenierosPage() {
     const [searchQuery, setSearchQuery] = useState('');
 
     // Sort tutorials by date (newest first)
-    const sortedTutorials = [...autocadTutorials].sort((a, b) =>
+    const sortedTutorials = [...iaTutorials].sort((a, b) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
@@ -28,10 +28,10 @@ export default function AutoCADTutorialsPage() {
                 {/* Header Section */}
                 <div className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold text-[#2f4860] mb-4 uppercase tracking-tight">
-                        Tutoriales de AutoCAD
+                        IA para Ingenieros
                     </h1>
                     <p className="text-lg md:text-xl text-[#83a0b5] max-w-2xl mx-auto">
-                        Domina el dibujo 2D y 3D con las mejores técnicas profesionales, bloques dinámicos y automatización.
+                        Herramientas de IA aplicadas a análisis, cálculo, coordinación y documentación técnica para potenciar tu productividad profesional.
                     </p>
                 </div>
 
@@ -42,23 +42,31 @@ export default function AutoCADTutorialsPage() {
                         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                             <h3 className="text-xl font-bold text-[#2f4860] mb-6 flex items-center gap-2">
                                 <ToolOutlined className="text-[#ea7048]" />
-                                Herramientas
+                                Herramientas IA
                             </h3>
                             <ul className="space-y-4">
                                 <li>
-                                    <Link href="/recursos-autocad" className="group flex flex-col">
+                                    <Link href="/ia-prompts" className="group flex flex-col">
                                         <span className="text-[#ea7048] font-bold group-hover:underline flex items-center gap-2">
-                                            📥 Bloques Dinámicos
+                                            🔧 Prompts para Análisis
                                         </span>
-                                        <span className="text-xs text-gray-400 mt-1">Librerías técnicas y componentes</span>
+                                        <span className="text-xs text-gray-400 mt-1">Chat GPT + Cálculos</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/ia-prompts-autocad" className="group flex flex-col">
+                                    <Link href="/ia-prompts" className="group flex flex-col">
                                         <span className="text-[#ea7048] font-bold group-hover:underline flex items-center gap-2">
-                                            🤖 Automatización IA
+                                            📐 IA para Revisión Técnica
                                         </span>
-                                        <span className="text-xs text-gray-400 mt-1">Scripts y prompts especializados</span>
+                                        <span className="text-xs text-gray-400 mt-1">Verificación de planos</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/ia-prompts" className="group flex flex-col">
+                                        <span className="text-[#ea7048] font-bold group-hover:underline flex items-center gap-2">
+                                            ⚙️ Automatización
+                                        </span>
+                                        <span className="text-xs text-gray-400 mt-1">Scripts y optimización</span>
                                     </Link>
                                 </li>
                             </ul>
@@ -68,24 +76,24 @@ export default function AutoCADTutorialsPage() {
                         <div className="bg-[#2f4860]/5 rounded-2xl p-6 border border-[#2f4860]/10">
                             <h3 className="text-lg font-bold text-[#2f4860] mb-4 opacity-70 flex items-center gap-2">
                                 <BookOutlined className="text-[#2f4860]" />
-                                Próximos Cursos
+                                Próximos Talleres
                             </h3>
                             <div className="space-y-4">
-                                <div className="p-3 border border-dashed border-gray-300 rounded-xl opacity-60 bg-yellow-50/30">
-                                    <span className="block text-sm font-bold text-[#2f4860] uppercase">Novedades AutoCAD 2027</span>
-                                    <span className="text-xs text-gray-400">Lanzamiento Exclusivo</span>
+                                <div className="p-3 border border-dashed border-gray-300 rounded-xl opacity-60 bg-blue-50/30">
+                                    <span className="block text-sm font-bold text-[#2f4860] uppercase">IA en Análisis Estructural</span>
+                                    <span className="text-xs text-gray-400">Próximamente 2026</span>
                                 </div>
                                 <div className="p-3 border border-dashed border-gray-300 rounded-xl opacity-50">
-                                    <span className="block text-sm font-bold text-gray-500 uppercase">Dibujo Arquitectónico</span>
+                                    <span className="block text-sm font-bold text-gray-500 uppercase">Automatización de Cálculos</span>
                                     <span className="text-xs text-gray-400">En desarrollo</span>
                                 </div>
                                 <div className="p-3 border border-dashed border-gray-300 rounded-xl opacity-50">
-                                    <span className="block text-sm font-bold text-gray-500 uppercase">Dibujo Estructural</span>
+                                    <span className="block text-sm font-bold text-gray-500 uppercase">IA para Coordinación BIM</span>
                                     <span className="text-xs text-gray-400">Próximamente</span>
                                 </div>
                                 <div className="p-3 border border-dashed border-gray-300 rounded-xl opacity-50">
-                                    <span className="block text-sm font-bold text-gray-500 uppercase">Dibujo MEP / Instalaciones</span>
-                                    <span className="text-xs text-gray-400">Planificado 2026</span>
+                                    <span className="block text-sm font-bold text-gray-500 uppercase">Revisión Técnica con IA</span>
+                                    <span className="text-xs text-gray-400">En planes</span>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +108,7 @@ export default function AutoCADTutorialsPage() {
                             </div>
                             <input
                                 type="text"
-                                placeholder="Buscar temas (ej. bloques, layouts, escalas, IA...)"
+                                placeholder="Buscar tutoriales de IA para ingeniería..."
                                 className="w-full bg-white border border-gray-100 rounded-2xl py-4 pl-12 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ea7048]/20 focus:border-[#ea7048] transition-all text-[#2f4860] text-lg"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -128,8 +136,8 @@ export default function AutoCADTutorialsPage() {
                                             <div className="md:col-span-3 p-6 flex flex-col justify-between">
                                                 <div>
                                                     <div className="flex items-center justify-between mb-2">
-                                                        <span className="bg-[#ea7048]/10 text-[#ea7048] px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">
-                                                            Tutorial CAD
+                                                        <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">
+                                                            IA Ingeniería
                                                         </span>
                                                         <span className="text-gray-400 text-sm italic">
                                                             {new Date(tutorial.date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
@@ -144,7 +152,7 @@ export default function AutoCADTutorialsPage() {
                                                 </div>
                                                 <div className="mt-4 pt-4 border-t border-gray-50">
                                                     <Link href="#" className="text-[#ea7048] font-bold flex items-center gap-2 hover:gap-3 transition-all">
-                                                        Explorar tutorial completa →
+                                                        Explorar técnica de IA →
                                                     </Link>
                                                 </div>
                                             </div>
@@ -159,7 +167,7 @@ export default function AutoCADTutorialsPage() {
                                         onClick={() => setSearchQuery('')}
                                         className="mt-4 text-[#ea7048] font-bold hover:underline"
                                     >
-                                        Ver todos los tutoriales
+                                        Ver todos los tutoriales de IA
                                     </button>
                                 </div>
                             )}

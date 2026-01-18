@@ -1,37 +1,45 @@
 "use client";
 import React, { useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BrandHeader } from '@/components/layout/BrandHeader';
 import { newsData } from '@/lib/newsData';
 
+const categories = [
+    'Todos',
+    'IA',
+    'Tecnología',
+    'BIM',
+    'Arquitectura',
+    'Ingeniería'
+];
+
 function NewsContent() {
     const searchParams = useSearchParams();
-    // Get available categories first to validate the URL param
-    const dbCategories = new Set(Object.values(newsData).map(a => a.category));
-    const fixedCategories = ['BIM', 'Software', 'IA'];
-    const categories = ['Todos', ...Array.from(new Set([...fixedCategories, ...Array.from(dbCategories)]))];
+    const router = useRouter();
 
     const initialCat = searchParams.get('cat');
-
-    // Determine initial filter based on URL param (case-insensitive match)
     const initialFilter = categories.find(c => c.toLowerCase() === initialCat?.toLowerCase()) || 'Todos';
 
     const [filter, setFilter] = useState<string>(initialFilter);
 
-    // Update filter if URL changes (optional, but good for navigation)
+    // Update filter if URL changes
     React.useEffect(() => {
-        if (initialCat) {
-            const match = categories.find(c => c.toLowerCase() === initialCat.toLowerCase());
-            if (match) setFilter(match);
+        const match = categories.find(c => c.toLowerCase() === initialCat?.toLowerCase());
+        setFilter(match || 'Todos');
+    }, [initialCat]);
+
+    const handleFilterChange = (category: string) => {
+        if (category === 'Todos') {
+            router.push('/noticias');
         } else {
-            setFilter('Todos'); // Reset to 'Todos' if initialCat is removed from URL
+            router.push(`/noticias?cat=${category}`);
         }
-    }, [initialCat, categories]); // Added allCategories to dependency array
+    };
 
     const filteredNews = filter === 'Todos'
         ? Object.values(newsData)
-        : Object.values(newsData).filter(article => article.category === filter);
+        : Object.values(newsData).filter(article => article.tags.includes(filter));
 
     return (
         <main className="container mx-auto px-4 py-8 lg:py-12">
@@ -49,7 +57,7 @@ function NewsContent() {
                 {categories.map((category) => (
                     <button
                         key={category}
-                        onClick={() => setFilter(category)}
+                        onClick={() => handleFilterChange(category)}
                         className={`px-6 py-2 rounded-full font-bold text-sm transition-all shadow-sm ${filter === category ? 'bg-[#ea7048] text-white shadow-md transform scale-105' : 'bg-white text-gray-500 hover:bg-gray-100'}`}
                     >
                         {category}
@@ -67,16 +75,30 @@ function NewsContent() {
                             className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 block group border border-gray-100"
                         >
                             <div className="h-48 bg-gray-200 overflow-hidden relative">
-                                <div className="absolute inset-0 bg-[#e0e7ff] flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-500">
-                                    {article.category === 'Infraestructura' ? '🏗️' : article.category === 'Transporte' ? '🚇' : article.category === 'Comercio' ? '🚢' : '📰'}
-                                </div>
+                                {article.image ? (
+                                    <img
+                                        src={article.image}
+                                        alt={article.title}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                ) : (
+                                    <div className="absolute inset-0 bg-[#e0e7ff] flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-500">
+                                        {article.category === 'Infraestructura' ? '🏗️' : article.category === 'Transporte' ? '🚇' : article.category === 'Comercio' ? '🚢' : '📰'}
+                                    </div>
+                                )}
                             </div>
                             <div className="p-6">
-                                <div className="flex justify-between items-center mb-3">
-                                    <span style={{ backgroundColor: article.tagColor }} className="text-white px-3 py-1 rounded-md text-xs uppercase font-bold tracking-wider">
-                                        {article.category}
-                                    </span>
-                                    <span className="text-gray-400 text-xs">{article.date}</span>
+                                <div className="flex flex-wrap gap-2 mb-3">
+                                    {article.tags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            style={{ backgroundColor: tag === article.category ? article.tagColor : '#94a3b8' }}
+                                            className="text-white px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                    <span className="ml-auto text-gray-400 text-[10px] self-center">{article.date}</span>
                                 </div>
                                 <h3 className="text-xl font-bold text-[#2f4860] mb-3 leading-tight group-hover:text-[#ea7048] transition-colors">
                                     {article.title}
@@ -93,7 +115,7 @@ function NewsContent() {
                 ) : (
                     <div className="col-span-full text-center py-20 text-gray-400">
                         <p className="text-xl">No se encontraron noticias en esta categoría.</p>
-                        <button onClick={() => setFilter('Todos')} className="text-[#ea7048] font-bold mt-4 hover:underline">Ver todas las noticias</button>
+                        <button onClick={() => handleFilterChange('Todos')} className="text-[#ea7048] font-bold mt-4 hover:underline">Ver todas las noticias</button>
                     </div>
                 )}
             </div>

@@ -42,26 +42,37 @@ export default async function GenericNoticiaPage({ params }: Props) {
       <main className="container mx-auto px-4 py-12 lg:py-20">
         <article className="max-w-4xl mx-auto bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="h-64 md:h-96 bg-gray-200 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[#e0e7ff] flex items-center justify-center text-9xl select-none">
-              {article.category === 'Infraestructura'
-                ? '🏗️'
-                : article.category === 'Transporte'
-                ? '🚇'
-                : article.category === 'Comercio'
-                ? '🚢'
-                : '📰'}
-            </div>
+            {article.image ? (
+              <img
+                src={article.image}
+                alt={article.title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-[#e0e7ff] flex items-center justify-center text-9xl select-none">
+                {article.category === 'Infraestructura'
+                  ? '🏗️'
+                  : article.category === 'Transporte'
+                    ? '🚇'
+                    : article.category === 'Comercio'
+                      ? '🚢'
+                      : '📰'}
+              </div>
+            )}
           </div>
 
           <div className="p-8 md:p-12">
-            <div className="flex flex-wrap gap-4 items-center mb-6">
-              <span
-                style={{ backgroundColor: article.tagColor }}
-                className="text-white px-4 py-1.5 rounded-full text-sm uppercase font-bold tracking-wider"
-              >
-                {article.category}
-              </span>
-              <span className="text-gray-400 font-medium">{article.date}</span>
+            <div className="flex flex-wrap gap-3 items-center mb-6">
+              {article.tags.map((tag) => (
+                <span
+                  key={tag}
+                  style={{ backgroundColor: tag === article.category ? article.tagColor : '#94a3b8' }}
+                  className="text-white px-3 py-1 rounded-full text-xs uppercase font-bold tracking-wider"
+                >
+                  {tag}
+                </span>
+              ))}
+              <span className="text-gray-400 font-medium ml-2">{article.date}</span>
             </div>
 
             <h1 className="text-3xl md:text-5xl font-bold text-[#2f4860] mb-8 leading-tight">

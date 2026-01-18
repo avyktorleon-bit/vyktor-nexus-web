@@ -20,10 +20,11 @@ const navigationItems = [
         icon: <ReadOutlined />,
         dropdown: [
             { label: 'Todas las Noticias', href: '/noticias' },
-            { label: 'Actualidad en Construcción', href: '/noticias?cat=Infraestructura' }, // Mapped to existing category
-            { label: 'Infraestructura', href: '/noticias?cat=Infraestructura' },
-            { label: 'Tecnología', href: '/noticias?cat=Tecnología' },
             { label: 'IA', href: '/noticias?cat=IA' },
+            { label: 'Tecnología', href: '/noticias?cat=Tecnología' },
+            { label: 'BIM', href: '/noticias?cat=BIM' },
+            { label: 'Arquitectura', href: '/noticias?cat=Arquitectura' },
+            { label: 'Ingeniería', href: '/noticias?cat=Ingeniería' },
         ],
     },
     {
@@ -33,8 +34,7 @@ const navigationItems = [
         dropdown: [
             { label: 'AutoCAD', href: '/tutoriales-autocad' },
             { label: 'Revit', href: '/tutoriales-revit' },
-            { label: 'ETABS', href: '/recursos?section=etabs' }, // Redirect to resources for now
-            { label: 'IA para Arquitectos', href: '/tutoriales-ia' }, // Needs check or create page
+            { label: 'ETABS', href: '/tutoriales-etabs' },
         ],
     },
     {
@@ -42,9 +42,12 @@ const navigationItems = [
         href: '/ia',
         icon: <BulbOutlined />,
         dropdown: [
-            { label: 'Prompts AutoCAD', href: '/ia-prompts-autocad' },
-            { label: 'Prompts Revit', href: '/ia-prompts-revit' },
-            { label: 'Nanobanana', href: '/recursos?section=nanobanana' }, // Redirect to resources
+            { label: 'IA para Arquitectos', href: '/tutoriales-ia-arquitectos' },
+            { label: 'IA para Ingenieros', href: '/tutoriales-ia-ingenieros' },
+            { label: 'IA para Construcción y Proyectos', href: '/tutoriales-ia-construccion' },
+            { label: '─────────────────', href: '#', disabled: true }, // Visual separator
+            { label: 'Biblioteca de Prompts', href: '#', disabled: true, isHeader: true },
+            { label: 'Biblioteca de Prompts', href: '/ia-prompts' },
         ],
     },
     {
@@ -52,9 +55,9 @@ const navigationItems = [
         href: '/recursos',
         icon: <FolderOpenOutlined />,
         dropdown: [
-            { label: 'Plantillas Revit', href: '/recursos-revit' },
-            { label: 'Bloques AutoCAD', href: '/recursos-autocad' },
-            { label: 'Formatos Técnicos', href: '/recursos?section=formatos' },
+            { label: 'Recursos Revit', href: '/recursos-revit' },
+            { label: 'Recursos AutoCAD', href: '/recursos-autocad' },
+            { label: 'Formatos Técnicos', href: '/recursos/documentacion-aec' },
         ],
     },
 ];
@@ -122,15 +125,32 @@ export function BrandHeader() {
                                             className="absolute top-[calc(100%-8px)] left-1/2 -translate-x-1/2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 p-2 pt-4 z-50"
                                         >
                                             <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-bottom-[10px] border-bottom-white absolute -top-2 left-1/2 -translate-x-1/2"></div>
-                                            {item.dropdown.map((subItem) => (
-                                                <Link
-                                                    key={subItem.label}
-                                                    href={subItem.href}
-                                                    className="block px-4 py-2.5 text-sm text-gray-600 hover:text-[#ea7048] hover:bg-orange-50 rounded-lg transition-all"
-                                                >
-                                                    {subItem.label}
-                                                </Link>
-                                            ))}
+                                            {item.dropdown.map((subItem: any) => {
+                                                // Handle separator
+                                                if (subItem.label.includes('─')) {
+                                                    return (
+                                                        <div key={subItem.label} className="border-t border-gray-100 my-2"></div>
+                                                    );
+                                                }
+                                                // Handle header
+                                                if (subItem.isHeader) {
+                                                    return (
+                                                        <div key={subItem.label} className="px-4 py-1 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                                            {subItem.label}
+                                                        </div>
+                                                    );
+                                                }
+                                                // Regular link
+                                                return (
+                                                    <Link
+                                                        key={subItem.label}
+                                                        href={subItem.href}
+                                                        className="block px-4 py-2.5 text-sm text-gray-600 hover:text-[#ea7048] hover:bg-orange-50 rounded-lg transition-all"
+                                                    >
+                                                        {subItem.label}
+                                                    </Link>
+                                                );
+                                            })}
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
@@ -173,16 +193,33 @@ export function BrandHeader() {
                                         {item.icon} {item.label}
                                     </div>
                                     <div className="pl-6 space-y-2">
-                                        {item.dropdown.map((subItem) => (
-                                            <Link
-                                                key={subItem.label}
-                                                href={subItem.href}
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                                className="block text-gray-500 hover:text-[#ea7048] text-sm"
-                                            >
-                                                {subItem.label}
-                                            </Link>
-                                        ))}
+                                        {item.dropdown.map((subItem: any) => {
+                                            // Handle separator
+                                            if (subItem.label.includes('─')) {
+                                                return (
+                                                    <div key={subItem.label} className="border-t border-gray-100 my-2"></div>
+                                                );
+                                            }
+                                            // Handle header
+                                            if (subItem.isHeader) {
+                                                return (
+                                                    <div key={subItem.label} className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-2 mb-1">
+                                                        {subItem.label}
+                                                    </div>
+                                                );
+                                            }
+                                            // Regular link
+                                            return (
+                                                <Link
+                                                    key={subItem.label}
+                                                    href={subItem.href}
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                    className="block text-gray-500 hover:text-[#ea7048] text-sm"
+                                                >
+                                                    {subItem.label}
+                                                </Link>
+                                            );
+                                        })}
                                     </div>
                                 </li>
                             ))}

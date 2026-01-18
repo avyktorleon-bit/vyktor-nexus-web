@@ -24,7 +24,7 @@ export function SoftwareCarousel() {
                 <h2 className="text-2xl font-bold text-[#2f4860] mb-2">Conoce la tecnología y programas para la construcción</h2>
                 <p className="text-[#83a0b5] mb-8 tracking-wider">Arquitectura · Ingeniería · BIM · Visualización · Automatización</p>
 
-                <div className="relative w-full max-w-6xl mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                <div className="relative w-full mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
                     <div className="flex w-max gap-16 animate-scroll hover:[animation-play-state:paused] py-5">
                         {[...softwareList, ...softwareList].map((software, index) => (
                             <div key={index} className="flex flex-col items-center justify-center w-28 h-20 transition-all duration-300 hover:scale-115 group">

@@ -24,10 +24,10 @@ interface ContentHubProps {
 
 export function ContentHub({ title, subtitle, videos, navLinks }: ContentHubProps) {
     return (
-        <section className="max-w-6xl mx-auto my-4 py-8 bg-white rounded-[20px] shadow-sm overflow-hidden">
+        <section className="container mx-auto my-4 py-8 bg-white rounded-[20px] shadow-sm overflow-hidden border border-gray-100">
             <div className="px-5">
                 <div className="text-center mb-8">
-                    <h2 className="text-4xl font-bold mb-2">{title}</h2>
+                    <h2 className="text-4xl font-bold mb-2 text-[#2f4860]">{title}</h2>
                     <p className="text-[#83a0b5] text-lg">{subtitle}</p>
                 </div>
 
