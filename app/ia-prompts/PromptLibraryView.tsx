@@ -137,9 +137,17 @@ export default function PromptLibraryView() {
         });
     }, [searchTerm, selectedDiscipline, selectedSoftware]);
 
-    const handleCopy = (text: string, id: string) => {
-        navigator.clipboard.writeText(text);
-        setCopiedId(id);
+    const handleCopy = async (text: string, id: string) => {
+        try {
+            if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                await navigator.clipboard.writeText(text);
+                setCopiedId(id);
+            } else {
+                console.warn('Clipboard API not available');
+            }
+        } catch (err) {
+            console.error('Error al copiar:', err);
+        }
         setTimeout(() => setCopiedId(null), 2000);
     };
 

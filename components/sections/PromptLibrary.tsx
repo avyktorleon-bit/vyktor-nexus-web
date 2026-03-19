@@ -45,10 +45,19 @@ const prompts: Prompt[] = [
 export function PromptLibrary() {
     const [copiedId, setCopiedId] = useState<number | null>(null);
 
-    const handleCopy = (text: string, id: number) => {
-        navigator.clipboard.writeText(text);
-        setCopiedId(id);
-        message.success('Prompt copiado al portapapeles');
+    const handleCopy = async (text: string, id: number) => {
+        try {
+            if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                await navigator.clipboard.writeText(text);
+                setCopiedId(id);
+                message.success('Prompt copiado al portapapeles');
+            } else {
+                throw new Error('Clipboard API not available');
+            }
+        } catch (err) {
+            console.error('Error al copiar:', err);
+            message.error('El portapapeles no está disponible en este navegador');
+        }
         setTimeout(() => setCopiedId(null), 2000);
     };
 

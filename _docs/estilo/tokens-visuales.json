@@ -1,0 +1,73 @@
+{
+  "origen": "Vyktor Nexus Web",
+  "nota": "Tokens detectados por uso real en style.css. No inventados.",
+  "tokens": {
+    "colores": [
+      {
+        "nombre": "blanco-fondo",
+        "valor": "#dde8f4",
+        "uso": "Fondo principal"
+      },
+      {
+        "nombre": "azul-oscuro",
+        "valor": "#2f4860",
+        "uso": "Texto principal, navegación, footer"
+      },
+      {
+        "nombre": "azul-gris",
+        "valor": "#83a0b5",
+        "uso": "Bordes, iconos neutros"
+      },
+      {
+        "nombre": "teal",
+        "valor": "#52aeb2",
+        "uso": "Acento secundario, etiquetas"
+      },
+      {
+        "nombre": "naranja-acento",
+        "valor": "#ea7048",
+        "uso": "Botones primarios, hover de navegación, acentos fuertes"
+      },
+      {
+        "nombre": "blanco-puro",
+        "valor": "#ffffff",
+        "uso": "Fondos de tarjetas, navegación fija"
+      },
+      {
+        "nombre": "hero-dark-bg",
+        "valor": "#0a0f18",
+        "uso": "Fondo de sección Hero nexus"
+      }
+    ],
+    "tipografia": [
+      {
+        "familia": "Inter, system-ui, -apple-system, sans-serif",
+        "uso": "General"
+      }
+    ],
+    "espaciados": [
+      {
+        "propiedad": "container-padding",
+        "valor": "1rem"
+      },
+      {
+        "propiedad": "max-width",
+        "valor": "1200px"
+      }
+    ],
+    "radios": [
+      {
+        "propiedad": "btn-radius",
+        "valor": "6px"
+      },
+      {
+        "propiedad": "hero-btn-radius",
+        "valor": "16px"
+      },
+      {
+        "propiedad": "card-radius",
+        "valor": "8px"
+      }
+    ]
+  }
+}
