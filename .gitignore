@@ -1,6 +1,47 @@
-node_modules
-.next
-out
+# Dependencias
+# Librerías instaladas localmente
+node_modules/
+
+# Build
+# Archivos generados por Next.js
+.next/
+
+# Exportaciones o salidas de compilación
+out/
+
+# Entorno
+# Variables sensibles
 .env
+
+# Configuración local privada
 .env.local
+
+# Otras variantes locales privadas
+.env*.local
+
+# Carpetas privadas (Gestionadas fuera del repositorio WEB)
+
+
+# Carpeta local específica del proyecto
 VALP - Saldos/
+
+# Agregar aquí más carpetas privadas
+# carpeta/
+# Breve descripción
+
+# Caché
+# Caché de TypeScript
+*.tsbuildinfo
+
+# Sistema
+# Archivo del sistema macOS
+.DS_Store
+
+# Archivo del sistema Windows
+Thumbs.db
+
+# Operacion local y documentacion privada
+.agent/
+_docs/seguridad/
+_backup_pre_reestructura/
+_extras/

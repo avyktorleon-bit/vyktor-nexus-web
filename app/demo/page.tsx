@@ -1,5 +1,5 @@
-import DemoOne from "@/demo";
+import { redirect } from "next/navigation";
 
 export default function DemoPage() {
-    return <DemoOne />;
+    redirect("/");
 }
