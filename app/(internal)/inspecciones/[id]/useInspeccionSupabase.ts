@@ -1,7 +1,6 @@
 import { useReducer, useEffect, useRef, useState, useCallback } from 'react';
 import { InspeccionData, InspeccionAction, PisoData } from '../../inspeccion-tecnica/types';
 import { supabase } from '@/lib/supabase';
-import { message } from 'antd';
 
 const especialidadVacia = { observado: '', declarado: '', pendienteVerificar: '' };
 
@@ -215,8 +214,14 @@ export function useInspeccionSupabase(inspeccionId: string, initialData: any) {
 
   // Guardar en Supabase
   const saveToSupabase = useCallback(async (data: InspeccionData) => {
+    if (!supabase) {
+      return;
+    }
+
+    const client = supabase;
+
     try {
-      const { error } = await supabase
+      const { error } = await client
         .from('inspecciones')
         .upsert({
           id: inspeccionId,
