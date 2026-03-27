@@ -11,11 +11,15 @@ interface Props {
 }
 
 export function FormRequerimiento({ data, dispatch }: Props) {
-  const handleChange = (field: keyof InspeccionData, value: any) => {
-    dispatch({ type: 'UPDATE_FIELD', field, value });
+  const handleReqChange = (field: keyof InspeccionData['requerimientos'], value: any) => {
+    dispatch({ type: 'UPDATE_REQUERIMIENTOS', field, value });
   };
 
-  const reqOptions = [
+  const handleRootChange = (field: 'resumenCliente', value: any) => {
+    dispatch({ type: 'UPDATE_ROOT_FIELD', field, value });
+  };
+
+  const reqOptions: { label: string; field: keyof InspeccionData['requerimientos'] }[] = [
     { label: 'Construir / Obra Nueva', field: 'reqConstruir' },
     { label: 'Ampliar', field: 'reqAmpliar' },
     { label: 'Modificar', field: 'reqModificar' },
@@ -42,8 +46,8 @@ export function FormRequerimiento({ data, dispatch }: Props) {
               {reqOptions.map((opt) => (
                 <Checkbox 
                   key={opt.field}
-                  checked={data[opt.field as keyof InspeccionData] as boolean}
-                  onChange={(e) => handleChange(opt.field as keyof InspeccionData, e.target.checked)}
+                  checked={data.requerimientos?.[opt.field]}
+                  onChange={(e) => handleReqChange(opt.field, e.target.checked)}
                   className="!text-gray-700 hover:text-[#52aeb2] transition-colors"
                 >
                   {opt.label}
@@ -60,7 +64,7 @@ export function FormRequerimiento({ data, dispatch }: Props) {
               className="flex-grow w-full h-full min-h-[250px] p-4 text-base"
               placeholder="Ej. Desea construir 3 pisos más azotea, con 2 departamentos por piso. Quieren dejar la placa lista para independizar a futuro..."
               value={data.resumenCliente}
-              onChange={(e) => handleChange('resumenCliente', e.target.value)}
+              onChange={(e) => handleRootChange('resumenCliente', e.target.value)}
             />
           </div>
         </Col>

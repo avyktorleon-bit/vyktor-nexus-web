@@ -11,8 +11,12 @@ interface Props {
 }
 
 export function FormDocumentacion({ data, dispatch }: Props) {
-  const handleChange = (field: keyof InspeccionData, value: any) => {
-    dispatch({ type: 'UPDATE_FIELD', field, value });
+  const handleDocChange = (field: keyof InspeccionData['docsEntregados'], value: any) => {
+    dispatch({ type: 'UPDATE_DOCS_ENTREGADOS', field, value });
+  };
+
+  const handleRootChange = (field: 'docsFaltantes' | 'observacionesDoc', value: any) => {
+    dispatch({ type: 'UPDATE_ROOT_FIELD', field, value });
   };
 
   return (
@@ -27,29 +31,33 @@ export function FormDocumentacion({ data, dispatch }: Props) {
           <div className="p-4 bg-gray-50 rounded-lg">
             <Title level={5} className="!text-[#2f4860] mb-4">Documentos Legales</Title>
             <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <Checkbox 
+                  checked={data.docsEntregados?.partidaRegistral}
+                  onChange={(e) => handleDocChange('partidaRegistral', e.target.checked)}
+                >
+                  Cuenta con Partida Registral
+                </Checkbox>
+                {data.docsEntregados?.partidaRegistral && (
+                  <Input 
+                    placeholder="N° Partida" 
+                    value={data.docsEntregados?.numeroPartida}
+                    onChange={(e) => handleDocChange('numeroPartida', e.target.value)}
+                    maxLength={12}
+                    className="w-32 !bg-white border-blue-200 focus:border-[#52aeb2]"
+                    title="Ingresar número de partida (letras y números permitidos)"
+                  />
+                )}
+              </div>
               <Checkbox 
-                checked={data.partidaRegistral}
-                onChange={(e) => handleChange('partidaRegistral', e.target.checked)}
-              >
-                Cuenta con Partida Registral
-              </Checkbox>
-              {data.partidaRegistral && (
-                <Input 
-                  placeholder="Número de Partida" 
-                  value={data.numeroPartida}
-                  onChange={(e) => handleChange('numeroPartida', e.target.value)}
-                  className="ml-6 w-[80%]"
-                />
-              )}
-              <Checkbox 
-                checked={data.copiaLiteral}
-                onChange={(e) => handleChange('copiaLiteral', e.target.checked)}
+                checked={data.docsEntregados?.copiaLiteral}
+                onChange={(e) => handleDocChange('copiaLiteral', e.target.checked)}
               >
                 Copia Literal Actualizada
               </Checkbox>
               <Checkbox 
-                checked={data.constanciaPosesion}
-                onChange={(e) => handleChange('constanciaPosesion', e.target.checked)}
+                checked={data.docsEntregados?.constanciaPosesion}
+                onChange={(e) => handleDocChange('constanciaPosesion', e.target.checked)}
               >
                 Constancia de Posesión (sin título)
               </Checkbox>
@@ -62,20 +70,20 @@ export function FormDocumentacion({ data, dispatch }: Props) {
             <Title level={5} className="!text-[#2f4860] mb-4">Planos Previos (Existentes)</Title>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <Checkbox 
-                checked={data.planosArquitectura}
-                onChange={(e) => handleChange('planosArquitectura', e.target.checked)}
+                checked={data.docsEntregados?.planosArquitectura}
+                onChange={(e) => handleDocChange('planosArquitectura', e.target.checked)}
               >Arquitectura</Checkbox>
               <Checkbox 
-                checked={data.planosEstructuras}
-                onChange={(e) => handleChange('planosEstructuras', e.target.checked)}
+                checked={data.docsEntregados?.planosEstructuras}
+                onChange={(e) => handleDocChange('planosEstructuras', e.target.checked)}
               >Estructuras</Checkbox>
               <Checkbox 
-                checked={data.planosSanitarias}
-                onChange={(e) => handleChange('planosSanitarias', e.target.checked)}
+                checked={data.docsEntregados?.planosSanitarias}
+                onChange={(e) => handleDocChange('planosSanitarias', e.target.checked)}
               >Sanitarias</Checkbox>
               <Checkbox 
-                checked={data.planosElectricas}
-                onChange={(e) => handleChange('planosElectricas', e.target.checked)}
+                checked={data.docsEntregados?.planosElectricas}
+                onChange={(e) => handleDocChange('planosElectricas', e.target.checked)}
               >Eléctricas</Checkbox>
             </div>
             
@@ -83,21 +91,33 @@ export function FormDocumentacion({ data, dispatch }: Props) {
               <label className="text-sm font-semibold text-gray-600">Formato / Estado</label>
               <Input 
                 placeholder="Ej. Planos en DWG versión 2018, físicos manchados..." 
-                value={data.formatoPlanos}
-                onChange={(e) => handleChange('formatoPlanos', e.target.value)}
+                value={data.docsEntregados?.formatoPlanos}
+                onChange={(e) => handleDocChange('formatoPlanos', e.target.value)}
               />
             </div>
           </div>
         </Col>
 
-        <Col xs={24}>
+        <Col xs={24} md={12}>
+          <div className="space-y-1">
+            <label className="text-sm font-semibold text-gray-600">Documentación Faltante Requerida</label>
+            <TextArea 
+              rows={3} 
+              placeholder="Listar documentos clave que deben conseguirse o buscarse para continuar..."
+              value={data.docsFaltantes}
+              onChange={(e) => handleRootChange('docsFaltantes', e.target.value)}
+            />
+          </div>
+        </Col>
+
+        <Col xs={24} md={12}>
           <div className="space-y-1">
             <label className="text-sm font-semibold text-gray-600">Observaciones Generales Documentación</label>
             <TextArea 
               rows={3} 
               placeholder="Anotar detalles como gravámenes, cruce de áreas, etc."
               value={data.observacionesDoc}
-              onChange={(e) => handleChange('observacionesDoc', e.target.value)}
+              onChange={(e) => handleRootChange('observacionesDoc', e.target.value)}
             />
           </div>
         </Col>

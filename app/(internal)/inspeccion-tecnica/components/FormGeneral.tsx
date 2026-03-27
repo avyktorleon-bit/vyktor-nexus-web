@@ -11,8 +11,8 @@ interface Props {
 }
 
 export function FormGeneral({ data, dispatch }: Props) {
-  const handleChange = (field: keyof InspeccionData, value: any) => {
-    dispatch({ type: 'UPDATE_FIELD', field, value });
+   const handleChange = (field: keyof InspeccionData, value: any) => {
+    dispatch({ type: 'UPDATE_ROOT_FIELD', field, value });
   };
 
   return (
@@ -53,7 +53,7 @@ export function FormGeneral({ data, dispatch }: Props) {
             </Col>
             <Col xs={24} md={12} lg={6}>
               <div className="space-y-1">
-                <label className="text-sm font-semibold text-gray-600">Persona de Contacto (Recibe)</label>
+                <label className="text-sm font-semibold text-gray-600">Persona de Contacto (Atiende la Visita)</label>
                 <Input 
                   size="large" 
                   placeholder="Nombre de quien recibe"
@@ -64,12 +64,39 @@ export function FormGeneral({ data, dispatch }: Props) {
             </Col>
             <Col xs={24} md={12} lg={6}>
               <div className="space-y-1">
-                <label className="text-sm font-semibold text-gray-600">Teléfono</label>
+                <label className="text-sm font-semibold text-gray-600">Teléfono del Contacto</label>
                 <Input 
                   size="large" 
                   placeholder="+51..."
-                  value={data.telefono}
-                  onChange={(e) => handleChange('telefono', e.target.value)}
+                  value={data.telefonoContacto}
+                  onChange={(e) => handleChange('telefonoContacto', e.target.value)}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={6}>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600">Inspector Responsable</label>
+                <Input 
+                  size="large" 
+                  placeholder="Nombre del técnico/arquitecto"
+                  value={data.inspector}
+                  onChange={(e) => handleChange('inspector', e.target.value)}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={6}>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600">Estado Inspección</label>
+                <Select 
+                  size="large" 
+                  className="w-full"
+                  value={data.estado}
+                  onChange={(val) => handleChange('estado', val)}
+                  options={[
+                    { value: 'Borrador', label: 'Borrador / En Campo' },
+                    { value: 'Pendiente', label: 'Pendiente de Validar' },
+                    { value: 'Completa', label: 'Completada' },
+                  ]}
                 />
               </div>
             </Col>
@@ -115,7 +142,7 @@ export function FormGeneral({ data, dispatch }: Props) {
                 />
               </div>
             </Col>
-            <Col xs={24}>
+            <Col xs={24} md={16} lg={16}>
               <div className="space-y-1">
                 <label className="text-sm font-semibold text-gray-600">Referencia de Ubicación</label>
                 <Input 
@@ -123,6 +150,17 @@ export function FormGeneral({ data, dispatch }: Props) {
                   placeholder="Frente a parque / Altura cuadra 10..."
                   value={data.referencia}
                   onChange={(e) => handleChange('referencia', e.target.value)}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={8} lg={8}>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600">Coordenadas (Lat, Lng) - [Opcional]</label>
+                <Input 
+                  size="large" 
+                  placeholder="-12.04318, -77.02824"
+                  value={data.coordenadas}
+                  onChange={(e) => handleChange('coordenadas', e.target.value)}
                 />
               </div>
             </Col>
@@ -148,7 +186,7 @@ export function FormGeneral({ data, dispatch }: Props) {
             </Col>
             <Col xs={24} md={10}>
               <div className="space-y-1">
-                <label className="text-sm font-semibold text-gray-600">DNI / RUC</label>
+                <label className="text-sm font-semibold text-gray-600">DNI / RUC Propietario</label>
                 <Input 
                   size="large" 
                   placeholder="Documento de identidad"
@@ -157,9 +195,31 @@ export function FormGeneral({ data, dispatch }: Props) {
                 />
               </div>
             </Col>
+            <Col xs={24} md={12}>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600">Poseedor Actual (Si no es el propietario)</label>
+                <Input 
+                  size="large" 
+                  placeholder="Nombre de quien ocupa el predio"
+                  value={data.poseedorActual}
+                  onChange={(e) => handleChange('poseedorActual', e.target.value)}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12}>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600">Representante / Apoderado</label>
+                <Input 
+                  size="large" 
+                  placeholder="Representante legal / Promotor"
+                  value={data.representante}
+                  onChange={(e) => handleChange('representante', e.target.value)}
+                />
+              </div>
+            </Col>
           </Row>
 
-          <div className="mt-6">
+          <div className="mt-8">
             <div className="flex justify-between items-center mb-4">
               <span className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
                 Familiares / Otros Contactos
@@ -177,7 +237,7 @@ export function FormGeneral({ data, dispatch }: Props) {
             {data.familiares?.map((familiar) => (
               <div key={familiar.id} className="bg-gray-50/50 p-4 rounded-lg border border-dashed border-gray-200 mb-3 relative group">
                 <Row gutter={[16, 16]}>
-                  <Col xs={24} md={13}>
+                  <Col xs={24} md={10}>
                     <div className="space-y-1">
                       <label className="text-xs font-semibold text-gray-500 uppercase tracking-tight">Nombre Completo</label>
                       <Input 
@@ -187,13 +247,23 @@ export function FormGeneral({ data, dispatch }: Props) {
                       />
                     </div>
                   </Col>
-                  <Col xs={24} md={8}>
+                  <Col xs={24} md={6}>
                     <div className="space-y-1">
                       <label className="text-xs font-semibold text-gray-500 uppercase tracking-tight">Relación / Vínculo</label>
                       <Input 
                         placeholder="Ej: Hijo / Apoderado"
                         value={familiar.relacion}
                         onChange={(e) => dispatch({ type: 'UPDATE_FAMILIAR', id: familiar.id, field: 'relacion', value: e.target.value })}
+                      />
+                    </div>
+                  </Col>
+                  <Col xs={24} md={5}>
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-gray-500 uppercase tracking-tight">Teléfono (Opcional)</label>
+                      <Input 
+                        placeholder="Ej: 999..."
+                        value={familiar.telefono}
+                        onChange={(e) => dispatch({ type: 'UPDATE_FAMILIAR', id: familiar.id, field: 'telefono', value: e.target.value })}
                       />
                     </div>
                   </Col>
