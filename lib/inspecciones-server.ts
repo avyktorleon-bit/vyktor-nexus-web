@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import { supabase, SUPABASE_CONFIGURED } from './supabase';
 
 export interface Inspeccion {
@@ -12,10 +10,9 @@ export interface Inspeccion {
   observaciones: string;
   mejoras_pendientes: string;
   created_at: string;
-  data?: any; // Para almacenar el objeto completo del evaluador
+  data?: any;
 }
 
-const DATA_PATH = path.join(process.cwd(), '..', '_docs', 'data', 'inspecciones.json');
 export async function getInspecciones(): Promise<Inspeccion[]> {
   try {
     if (SUPABASE_CONFIGURED && supabase) {
@@ -26,14 +23,16 @@ export async function getInspecciones(): Promise<Inspeccion[]> {
 
       if (error) {
         console.error("Supabase Error:", error);
-        return await getLocalInspecciones();
+        return [];
       }
+
       return data || [];
     }
-    return await getLocalInspecciones();
+
+    return [];
   } catch (error) {
     console.error("Error obteniendo inspecciones:", error);
-    return await getLocalInspecciones();
+    return [];
   }
 }
 
@@ -47,15 +46,17 @@ export async function getInspeccionById(id: string): Promise<Inspeccion | null> 
         .single();
 
       if (error) {
-         console.error("Supabase Error detail:", error);
-         return await getLocalInspeccionById(id);
+        console.error("Supabase Error detail:", error);
+        return null;
       }
+
       return data;
     }
-    return await getLocalInspeccionById(id);
+
+    return null;
   } catch (error) {
-     console.error("Error detalle inspección:", error);
-     return await getLocalInspeccionById(id);
+    console.error("Error detalle inspeccion:", error);
+    return null;
   }
 }
 
@@ -66,21 +67,10 @@ export async function saveInspeccion(inspeccion: Partial<Inspeccion>) {
       .upsert(inspeccion)
       .select()
       .single();
+
     if (error) throw error;
     return data;
   }
-  // No implementamos guardado en JSON local por simplicidad en server-side
+
   throw new Error("Supabase no configurado para guardado.");
-}
-
-// Funciones de Respaldo Local (JSON)
-async function getLocalInspecciones(): Promise<Inspeccion[]> {
-  if (!fs.existsSync(DATA_PATH)) return [];
-  const data = fs.readFileSync(DATA_PATH, 'utf-8');
-  return JSON.parse(data);
-}
-
-async function getLocalInspeccionById(id: string): Promise<Inspeccion | null> {
-  const localData = await getLocalInspecciones();
-  return localData.find(i => i.id === id) || null;
 }

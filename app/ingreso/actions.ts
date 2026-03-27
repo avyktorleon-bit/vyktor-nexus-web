@@ -1,11 +1,11 @@
 "use server";
 
-import fs from 'fs';
-import path from 'path';
 import { cookies } from 'next/headers';
 import { headers } from 'next/headers';
 
 const AUTH_COOKIE_NAME = 'personal_panel_auth';
+const PANEL_ACCESS_USER = process.env.PANEL_ACCESS_USER || '';
+const PANEL_ACCESS_PASSWORD = process.env.PANEL_ACCESS_PASSWORD || '';
 
 async function getAuthCookieOptions() {
   const headerStore = await headers();
@@ -31,26 +31,17 @@ export async function loginAction(formData: FormData) {
   const passwordInput = formData.get('password') as string;
 
   try {
-    // Determine the path to the credentials file
-    // IMPORTANT: This dependency on '../_docs' is only for LOCAL/PRIVATE operation.
-    // In a production deployment (e.g. Vercel), this file will not be available outside the repo.
-    // Use environment variables (GEMINI_API_KEY, etc.) or a proper database for production auth.
-    const configPath = path.join(process.cwd(), '..', '_docs', 'seguridad', 'acceso.json');
-    
-    if (!fs.existsSync(configPath)) {
-      return { success: false, message: "Error interno: Configuración de acceso no encontrada." };
+    if (!PANEL_ACCESS_USER || !PANEL_ACCESS_PASSWORD) {
+      return { success: false, message: "Acceso no configurado en este entorno." };
     }
 
-    const configData = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-
-    if (usuarioInput === configData.usuario && passwordInput === configData.password) {
+    if (usuarioInput === PANEL_ACCESS_USER && passwordInput === PANEL_ACCESS_PASSWORD) {
       const cookieStore = await cookies();
       cookieStore.set(AUTH_COOKIE_NAME, 'true', await getAuthCookieOptions());
-      
       return { success: true };
-    } else {
-      return { success: false, message: "Usuario o contraseña incorrectos." };
     }
+
+    return { success: false, message: "Usuario o contrasena incorrectos." };
   } catch (error) {
     console.error("Login error:", error);
     return { success: false, message: "Error al procesar la solicitud." };
@@ -58,12 +49,12 @@ export async function loginAction(formData: FormData) {
 }
 
 export async function logoutAction() {
-    const cookieStore = await cookies();
-    cookieStore.delete(AUTH_COOKIE_NAME);
-    return { success: true };
+  const cookieStore = await cookies();
+  cookieStore.delete(AUTH_COOKIE_NAME);
+  return { success: true };
 }
 
 export async function checkAuth() {
-    const cookieStore = await cookies();
-    return cookieStore.get(AUTH_COOKIE_NAME)?.value === 'true';
+  const cookieStore = await cookies();
+  return cookieStore.get(AUTH_COOKIE_NAME)?.value === 'true';
 }
