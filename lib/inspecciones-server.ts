@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { supabase } from './supabase';
+import { supabase, SUPABASE_CONFIGURED } from './supabase';
 
 export interface Inspeccion {
   id: string;
@@ -16,11 +16,9 @@ export interface Inspeccion {
 }
 
 const DATA_PATH = path.join(process.cwd(), '..', '_docs', 'data', 'inspecciones.json');
-const SUPABASE_CONFIGURED = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY && !process.env.NEXT_PUBLIC_SUPABASE_URL.startsWith('TU_'));
-
 export async function getInspecciones(): Promise<Inspeccion[]> {
   try {
-    if (SUPABASE_CONFIGURED) {
+    if (SUPABASE_CONFIGURED && supabase) {
       const { data, error } = await supabase
         .from('inspecciones')
         .select('id, numero_inspeccion, propietaria, direccion, fecha, estado, observaciones, mejoras_pendientes, created_at')
@@ -41,7 +39,7 @@ export async function getInspecciones(): Promise<Inspeccion[]> {
 
 export async function getInspeccionById(id: string): Promise<Inspeccion | null> {
   try {
-    if (SUPABASE_CONFIGURED) {
+    if (SUPABASE_CONFIGURED && supabase) {
       const { data, error } = await supabase
         .from('inspecciones')
         .select('*')
@@ -62,7 +60,7 @@ export async function getInspeccionById(id: string): Promise<Inspeccion | null> 
 }
 
 export async function saveInspeccion(inspeccion: Partial<Inspeccion>) {
-  if (SUPABASE_CONFIGURED) {
+  if (SUPABASE_CONFIGURED && supabase) {
     const { data, error } = await supabase
       .from('inspecciones')
       .upsert(inspeccion)

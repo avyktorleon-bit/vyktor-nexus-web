@@ -152,6 +152,11 @@ function InspeccionTecnicaContent() {
       return;
     }
 
+    if (!supabase) {
+      message.error('Supabase no esta configurado en este entorno. La publicacion en la nube no esta disponible.');
+      return;
+    }
+
     setIsPublishing(true);
     try {
       // Intentamos insertar la nueva inspección en Supabase
