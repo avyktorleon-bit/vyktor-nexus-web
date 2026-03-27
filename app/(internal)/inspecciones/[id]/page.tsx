@@ -2,6 +2,8 @@ import React from 'react';
 import { getInspeccionById } from '@/lib/inspecciones-server';
 import InspeccionDetailClient from './InspeccionDetailClient';
 
+export const runtime = 'edge';
+
 interface Props {
   params: Promise<{ id: string }>;
 }
