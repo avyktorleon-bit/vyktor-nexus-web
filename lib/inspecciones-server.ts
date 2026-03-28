@@ -13,26 +13,31 @@ export interface Inspeccion {
   data?: any;
 }
 
-export async function getInspecciones(): Promise<Inspeccion[]> {
+export interface InspeccionesResult {
+  data: Inspeccion[];
+  hasConnectionIssue: boolean;
+}
+
+export async function getInspecciones(): Promise<InspeccionesResult> {
   try {
-    if (SUPABASE_CONFIGURED && supabase) {
-      const { data, error } = await supabase
-        .from('inspecciones')
-        .select('id, numero_inspeccion, propietaria, direccion, fecha, estado, observaciones, mejoras_pendientes, created_at')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error("Supabase Error:", error);
-        return [];
-      }
-
-      return data || [];
+    if (!SUPABASE_CONFIGURED || !supabase) {
+      return { data: [], hasConnectionIssue: true };
     }
 
-    return [];
+    const { data, error } = await supabase
+      .from('inspecciones')
+      .select('id, numero_inspeccion, propietaria, direccion, fecha, estado, observaciones, mejoras_pendientes, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error("Supabase Error:", error);
+      return { data: [], hasConnectionIssue: true };
+    }
+
+    return { data: data || [], hasConnectionIssue: false };
   } catch (error) {
     console.error("Error obteniendo inspecciones:", error);
-    return [];
+    return { data: [], hasConnectionIssue: true };
   }
 }
 
@@ -55,7 +60,7 @@ export async function getInspeccionById(id: string): Promise<Inspeccion | null> 
 
     return null;
   } catch (error) {
-    console.error("Error detalle inspeccion:", error);
+    console.error("Error detalle inspección:", error);
     return null;
   }
 }

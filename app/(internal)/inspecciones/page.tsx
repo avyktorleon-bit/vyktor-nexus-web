@@ -9,9 +9,9 @@ export const metadata = {
   description: 'Módulo interno para gestión de inspecciones técnicas.',
 };
 
-export const revalidate = 0; // Evita el cache para mostrar datos frescos de Supabase
+export const revalidate = 0;
 
 export default async function InspeccionesListPage() {
-  const inspecciones = await getInspecciones();
-  return <InspeccionesClient data={inspecciones} />;
+  const result = await getInspecciones();
+  return <InspeccionesClient data={result.data} hasConnectionIssue={result.hasConnectionIssue} />;
 }

@@ -41,7 +41,7 @@ export async function loginAction(formData: FormData) {
       return { success: true };
     }
 
-    return { success: false, message: "Usuario o contrasena incorrectos." };
+    return { success: false, message: "Usuario o contraseña incorrectos." };
   } catch (error) {
     console.error("Login error:", error);
     return { success: false, message: "Error al procesar la solicitud." };

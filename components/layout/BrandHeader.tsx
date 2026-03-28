@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,9 +10,11 @@ import {
     FolderOpenOutlined,
     DownOutlined,
     MenuOutlined,
-    CloseOutlined
+    CloseOutlined,
 } from '@ant-design/icons';
 import { motion, AnimatePresence } from 'framer-motion';
+
+const SEPARATOR_TOKEN = '__separator__';
 
 const navigationItems = [
     {
@@ -19,7 +22,7 @@ const navigationItems = [
         href: '/noticias',
         icon: <ReadOutlined />,
         dropdown: [
-            { label: 'Todas las Noticias', href: '/noticias' },
+            { label: 'Todas las noticias', href: '/noticias' },
             { label: 'IA', href: '/noticias?cat=IA' },
             { label: 'Tecnología', href: '/noticias?cat=Tecnología' },
             { label: 'BIM', href: '/noticias?cat=BIM' },
@@ -45,7 +48,7 @@ const navigationItems = [
             { label: 'IA para Arquitectos', href: '/tutoriales-ia-arquitectos' },
             { label: 'IA para Ingenieros', href: '/tutoriales-ia-ingenieros' },
             { label: 'IA para Construcción y Proyectos', href: '/tutoriales-ia-construccion' },
-            { label: '─────────────────', href: '#', disabled: true }, // Visual separator
+            { label: SEPARATOR_TOKEN, href: '#', disabled: true },
             { label: 'Biblioteca de Prompts', href: '#', disabled: true, isHeader: true },
             { label: 'Biblioteca de Prompts', href: '/ia-prompts' },
         ],
@@ -69,7 +72,6 @@ export function BrandHeader() {
     return (
         <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 h-[80px] flex items-center justify-between gap-4">
-                {/* Logo Section */}
                 <div className="flex-shrink-0">
                     <Link href="/" className="flex items-center gap-3 no-underline group">
                         <Image
@@ -85,7 +87,6 @@ export function BrandHeader() {
                     </Link>
                 </div>
 
-                {/* Navigation Menu (Custom Desktop) */}
                 <nav className="hidden lg:flex flex-grow justify-center">
                     <ul className="flex items-center gap-6 list-none m-0 p-0 h-full">
                         {navigationItems.map((item) => (
@@ -98,23 +99,14 @@ export function BrandHeader() {
                                 <Link
                                     href={item.href}
                                     className="flex items-center gap-2 text-[#2f4860] font-bold text-sm tracking-tight hover:text-[#ea7048] transition-colors py-8 h-full"
-                                    onClick={(e) => {
-                                        // Optional: allow toggle on click for touch screens/desktop clickers
-                                        if (window.innerWidth >= 1024) {
-                                            // On desktop, we can still navigate, but maybe prevent default if we want it to JUST open?
-                                            // Usually, a hover menu should also have a main category link.
-                                        }
-                                    }}
                                 >
                                     <span className="text-lg opacity-70 group-hover:opacity-100 transition-opacity">{item.icon}</span>
                                     {item.label}
                                     <DownOutlined className="text-[10px] transition-transform duration-300 group-hover:rotate-180" />
                                 </Link>
 
-                                {/* Invisible Bridge to prevent closing when moving to dropdown */}
                                 <div className="absolute top-full left-0 w-full h-2 bg-transparent"></div>
 
-                                {/* Dropdown Menu */}
                                 <AnimatePresence>
                                     {openDropdown === item.label && (
                                         <motion.div
@@ -126,13 +118,10 @@ export function BrandHeader() {
                                         >
                                             <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-bottom-[10px] border-bottom-white absolute -top-2 left-1/2 -translate-x-1/2"></div>
                                             {item.dropdown.map((subItem: any) => {
-                                                // Handle separator
-                                                if (subItem.label.includes('─')) {
-                                                    return (
-                                                        <div key={subItem.label} className="border-t border-gray-100 my-2"></div>
-                                                    );
+                                                if (subItem.label === SEPARATOR_TOKEN) {
+                                                    return <div key={`${item.label}-separator`} className="border-t border-gray-100 my-2"></div>;
                                                 }
-                                                // Handle header
+
                                                 if (subItem.isHeader) {
                                                     return (
                                                         <div key={subItem.label} className="px-4 py-1 text-xs font-bold text-gray-400 uppercase tracking-wider">
@@ -140,7 +129,7 @@ export function BrandHeader() {
                                                         </div>
                                                     );
                                                 }
-                                                // Regular link
+
                                                 return (
                                                     <Link
                                                         key={subItem.label}
@@ -159,8 +148,13 @@ export function BrandHeader() {
                     </ul>
                 </nav>
 
-                {/* Right Action & Mobile Toggle */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 md:gap-4">
+                    <Link
+                        href="/ingreso"
+                        className="hidden sm:inline-flex items-center justify-center min-w-[120px] px-5 py-2 rounded-lg border border-[#d7deea] bg-white text-[#2f4860] font-bold text-sm uppercase tracking-wider shadow-sm hover:border-[#ea7048] hover:text-[#ea7048] hover:bg-orange-50 transition-all"
+                    >
+                        Ingreso
+                    </Link>
                     <Link
                         href="/contacto"
                         className="bg-[#ea7048] text-white px-5 py-2 rounded-lg font-bold hover:bg-[#d15d36] transition-all whitespace-nowrap hidden sm:block"
@@ -177,7 +171,6 @@ export function BrandHeader() {
                 </div>
             </div>
 
-            {/* Mobile Menu (Overlay) */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
@@ -194,13 +187,10 @@ export function BrandHeader() {
                                     </div>
                                     <div className="pl-6 space-y-2">
                                         {item.dropdown.map((subItem: any) => {
-                                            // Handle separator
-                                            if (subItem.label.includes('─')) {
-                                                return (
-                                                    <div key={subItem.label} className="border-t border-gray-100 my-2"></div>
-                                                );
+                                            if (subItem.label === SEPARATOR_TOKEN) {
+                                                return <div key={`${item.label}-separator-mobile`} className="border-t border-gray-100 my-2"></div>;
                                             }
-                                            // Handle header
+
                                             if (subItem.isHeader) {
                                                 return (
                                                     <div key={subItem.label} className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-2 mb-1">
@@ -208,7 +198,7 @@ export function BrandHeader() {
                                                     </div>
                                                 );
                                             }
-                                            // Regular link
+
                                             return (
                                                 <Link
                                                     key={subItem.label}
@@ -223,6 +213,22 @@ export function BrandHeader() {
                                     </div>
                                 </li>
                             ))}
+                            <li className="pt-4 border-t border-gray-100">
+                                <Link
+                                    href="/ingreso"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block w-full text-center py-3 bg-gray-50 text-[#2f4860] font-bold rounded-xl hover:bg-gray-100 transition-all uppercase tracking-widest text-sm mb-2"
+                                >
+                                    Login Personal
+                                </Link>
+                                <Link
+                                    href="/contacto"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block w-full text-center py-4 bg-[#ea7048] text-white font-bold rounded-xl hover:bg-[#d15d36] transition-all uppercase tracking-widest text-sm"
+                                >
+                                    Contacto
+                                </Link>
+                            </li>
                         </ul>
                     </motion.div>
                 )}
