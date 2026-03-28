@@ -19,6 +19,12 @@ const links = [
     },
 ];
 
+async function logoutFromPanel() {
+    "use server";
+    await logoutAction();
+    redirect('/');
+}
+
 export default async function PanelPersonalPage() {
     const authenticated = await checkAuth();
 
@@ -35,7 +41,7 @@ export default async function PanelPersonalPage() {
                         <h1 className="text-2xl font-black text-[#0a0f18]">Vyktor Nexus</h1>
                     </div>
 
-                    <form action={logoutAction}>
+                    <form action={logoutFromPanel}>
                         <button
                             type="submit"
                             className="rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-500 transition hover:bg-red-500 hover:text-white"
